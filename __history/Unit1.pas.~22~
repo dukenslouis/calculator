@@ -1,0 +1,147 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  TForm1 = class(TForm)
+    Button1: TButton;
+    Button2: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    Button5: TButton;
+    Button6: TButton;
+    Button7: TButton;
+    Button8: TButton;
+    Button9: TButton;
+    Button0: TButton;
+    btnAdd: TButton;
+    btnmin: TButton;
+    btndivide: TButton;
+    btnmutply: TButton;
+    btnequal: TButton;
+    btnClear: TButton;
+    edtInput: TEdit;
+    function returnAnswer(Sender: TObject; a: double; b: double; operV: char): double;
+    procedure btnClearClick(Sender: TObject);
+    procedure ClearFun(Sender: TObject);
+    procedure btnAddClick(Sender: TObject);
+    procedure btnminClick(Sender: TObject);
+    procedure btnmutplyClick(Sender: TObject);
+    procedure btndivideClick(Sender: TObject);
+    procedure btnequalClick(Sender: TObject);
+    procedure ClearAll(Sender: TObject);
+    procedure SetAandClear(Sender:TObject; SetOper: char);
+    function Caption2char(Sender:TObject; SetTcap: TCaption):char;
+  private
+    { Private declarations }
+    intgerA: double;
+    intgerB: double;
+    oper: char;
+    when2clr: bool;
+
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+  intA, intB : string;
+
+
+implementation
+
+{$R *.dfm}
+procedure TForm1.btnminClick(Sender: TObject);
+
+begin
+  SetAandClear(Sender,Caption2char(Sender,btnmin.Caption));
+end;
+
+procedure TForm1.btnmutplyClick(Sender: TObject);
+begin
+  SetAandClear(Sender,Caption2char(Sender,btnmutply.Caption));
+end;
+
+procedure TForm1.ClearFun(Sender: TObject);
+begin
+    edtInput.Text := '0';
+
+end;
+procedure TForm1.ClearAll(Sender: TObject);
+begin
+    edtInput.Text := '0';
+    intgerA := 0;
+    intgerB := 0;
+    oper := '0';
+end;
+
+procedure TForm1.SetAandClear(Sender:TObject; SetOper: char);
+
+begin
+       intgerA:= StrToFloat(edtInput.Text);
+       oper := SetOper;
+       ClearFun(Sender);
+end;
+
+
+function TForm1.Caption2char(Sender: TObject; SetTcap: TCaption):char;
+var
+  myChar: Char;
+  myCaption: string;
+
+begin
+  myCaption := SetTcap;
+  if Length(myCaption) > 0 then
+    myChar := myCaption[1]
+    else
+    myChar := #0;
+
+  Result:= myChar;
+
+end;
+
+procedure TForm1.btnAddClick(Sender: TObject);
+
+begin
+  SetAandClear(Sender,Caption2char(Sender,btnAdd.Caption));
+end;
+
+procedure TForm1.btnClearClick(Sender: TObject);
+begin
+    ClearFun(Sender)
+end;
+
+procedure TForm1.btndivideClick(Sender: TObject);
+
+begin
+  SetAandClear(Sender,Caption2char(Sender,btndivide.Caption));
+end;
+
+procedure TForm1.btnequalClick(Sender: TObject);
+var
+  anwser: double;
+begin
+  intgerB := StrToFloat(edtInput.Text);
+  anwser := returnAnswer(Sender,intgerA,intgerB,oper);
+  edtInput.Text := FloatToStr(anwser);
+
+end;
+
+
+function TForm1.returnAnswer(Sender: TObject; a: double; b: double; operV: char): double;
+
+begin
+
+  if operV = '*' then Result := a * b
+  else if operV = '/' then Result := a / b
+  else if operV = '+' then Result := a + b
+  else if operV = '-' then Result := a - b
+  else Result := 0.00;
+
+end;
+
+end.
